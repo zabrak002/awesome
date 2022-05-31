@@ -1,0 +1,30 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Events
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    %header.navbar.navbar-expand-sm.navbar-light.bg-dark
+      .container
+        = link_to "Awesome Events", root_path, class: "navbar-brand text-white-50 mr-auto"
+        %ul.navbar-nav
+          %li.nav-item
+            = link_to "イベントを作る", new_event_path, class: "nav-link text-white-50"
+          - if logged_in?
+            %li.nav-item
+              = link_to "ログアウト", logout_path, class: "nav-link text-white-50", method: :delete
+          - else
+            %li.nav-item
+              = link_to "GitHubでログイン", '/auth/github', class: "nav-link text-white-50", method: :post
+    .container
+      - if flash.notice
+        .alert.alert-success
+          = flash.notice
+      - if flash.alert
+        .alert.alert-danger
+          = flash.alert
+      = yield
